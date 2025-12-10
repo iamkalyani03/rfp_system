@@ -31,8 +31,8 @@ This project is a Python application built using **FastAPI**. It uses **SQLModel
 
 ### **1. Clone the Repository**
 ```bash
-git clone <your-repo-link>
-cd <your-repo-folder>
+git clone https://github.com/iamkalyani03/rfp_system.git
+cd rfp-system
 ```
 
 ---
@@ -69,8 +69,7 @@ Create a `.env` file in your project root:
 DATABASE_URL=postgresql://postgres:mypassword123@localhost:5432/rfpdb
 
 # REQUIRED — your OpenAI API key
-OPENAI_API_KEY=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
-
+OPENAI_API_KEY=your_secret_key
 # SMTP (Sending Email)
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
