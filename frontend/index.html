@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI RFP Management</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #f9fbff, #eef3ff);
+      font-family: "Inter", sans-serif;
+      animation: fadeIn 1s ease;
+    }
+
+    /* ------------------ Animations ------------------ */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { transform: translateY(25px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes floatIcon { 0%{transform:translateY(0);}50%{transform:translateY(-6px);}100%{transform:translateY(0);} }
+
+    /* ------------------ Header ------------------ */
+    .header-box {
+      text-align: center;
+      padding: 35px 10px;
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(18px);
+      border-radius: 22px;
+      margin-bottom: 35px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      animation: slideUp 0.8s ease;
+    }
+
+    .header-icon {
+      font-size: 48px;
+      animation: floatIcon 3s infinite ease-in-out;
+      margin-bottom: 8px;
+    }
+
+    .header-title {
+      font-size: 32px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #5873ff, #00b7ff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .header-subtitle {
+      font-size: 14px;
+      opacity: 0.75;
+      margin-top: 4px;
+    }
+
+    /* ------------------ Cards ------------------ */
+    .card {
+      border-radius: 18px;
+      padding: 22px;
+      background: #ffffff;
+      border: 1px solid #f1f1f1;
+      box-shadow: 0px 10px 25px rgba(0,0,0,0.05);
+      transition: all 0.25s ease;
+      animation: slideUp 0.8s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0px 16px 30px rgba(0,0,0,0.08);
+      border-color: #dce6ff;
+    }
+
+    /* ------------------ Buttons ------------------ */
+    .btn-premium {
+      background: linear-gradient(120deg, #5873ff, #00b7ff);
+      border: none;
+      padding: 12px;
+      font-weight: 600;
+      color: white;
+      border-radius: 10px;
+      transition: 0.25s;
+    }
+
+    .btn-premium:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0,140,255,0.35);
+    }
+
+    .btn-green {
+      background: linear-gradient(120deg, #2ecc71, #1abc9c);
+      border: none;
+      padding: 12px;
+      color: white;
+      font-weight: 600;
+      border-radius: 10px;
+      transition: 0.25s;
+    }
+
+    .btn-green:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(46,204,113,0.35);
+    }
+
+    .btn-yellow {
+      background: linear-gradient(120deg, #f9d423, #f08e0f);
+      border: none;
+      padding: 12px;
+      color: black;
+      font-weight: 600;
+      border-radius: 10px;
+      transition: 0.25s;
+    }
+
+    .btn-yellow:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(240,150,0,0.35);
+    }
+
+    /* ------------------ Inputs ------------------ */
+    textarea,
+    input {
+      border-radius: 12px !important;
+      border: 1px solid #dcdcdc !important;
+      transition: 0.25s;
+    }
+
+    textarea:focus,
+    input:focus {
+      border-color: #6f8bff !important;
+      box-shadow: 0 0 10px rgba(110,140,255,0.4);
+      transform: scale(1.02);
+    }
+
+    textarea { height: 180px; }
+
+    /* ------------------ Output ------------------ */
+    pre {
+      background: #111827;
+      color: #00f7b2;
+      padding: 16px;
+      border-radius: 12px;
+      height: 220px;
+      overflow-y: auto;
+      border: 1px solid #00f7b2;
+      box-shadow: 0 0 14px rgba(0,255,178,0.25);
+      animation: fadeIn 0.8s ease;
+    }
+
+  </style>
+
+</head>
+<body>
+
+<div class="container py-4">
+
+  <!-- PREMIUM HEADER -->
+  <div class="header-box">
+      <div class="header-icon">🧿</div> <!-- UNIQUE ICON -->
+      <div class="header-title">AI RFP Management System</div>
+      <div class="header-subtitle">Smart. Fast. Automated Procurement Intelligence</div>
+  </div>
+
+
+  <div class="row g-4">
+
+    <!-- CREATE RFP -->
+    <div class="col-md-6">
+      <div class="card">
+        <h4 class="fw-bold">Create RFP</h4>
+        <textarea id="rfpText" class="form-control mt-2"
+        placeholder="Describe your project requirements..."></textarea>
+        <button onclick="createRFP()" class="btn btn-premium mt-3 w-100">Generate RFP</button>
+
+        <pre id="rfpOutput" class="mt-3"></pre>
+      </div>
+    </div>
+
+    <!-- VENDORS -->
+    <div class="col-md-6">
+      <div class="card">
+        <h4 class="fw-bold">Add Vendor</h4>
+
+        <input id="vendorName" class="form-control mt-2" placeholder="Vendor Name">
+        <input id="vendorEmail" class="form-control mt-2" placeholder="Vendor Email">
+
+        <button onclick="addVendor()" class="btn btn-green mt-3 w-100">Add Vendor</button>
+
+        <h5 class="mt-4 fw-semibold">Existing Vendors</h5>
+        <div id="vendorList" class="mt-2"></div>
+
+        <input id="sendRfpId" class="form-control mt-3" placeholder="RFP ID to Send">
+        <button onclick="sendRFP()" class="btn btn-yellow w-100 mt-2">Send RFP</button>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- COMPARE PROPOSALS -->
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <div class="card">
+        <h4 class="fw-bold">Compare Proposals</h4>
+
+        <div class="d-flex mt-2 gap-2">
+          <input id="compareRfpId" class="form-control" placeholder="RFP ID">
+          <button onclick="compareRFP()" class="btn btn-premium">Compare</button>
+        </div>
+
+        <pre id="compareOutput" class="mt-3"></pre>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ================= JS (Unchanged) ================= -->
+<script>
+const API = "http://127.0.0.1:8000";
+
+async function createRFP() {
+    const text = document.getElementById("rfpText").value;
+    const res = await fetch(`${API}/rfp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text })
+    });
+    const data = await res.json();
+    document.getElementById("rfpOutput").textContent = JSON.stringify(data, null, 2);
+}
+
+async function loadVendors() {
+    const res = await fetch(`${API}/vendors`);
+    const vendors = await res.json();
+
+    let html = "";
+    vendors.forEach(v => {
+        html += `
+          <div class="mb-1">
+            <input type="checkbox" value="${v.id}" class="vendorCheck"> 
+            <strong>${v.name}</strong> (${v.email})
+          </div>`;
+    });
+
+    document.getElementById("vendorList").innerHTML = html;
+}
+
+async function addVendor() {
+    const name = document.getElementById("vendorName").value;
+    const email = document.getElementById("vendorEmail").value;
+
+    await fetch(`${API}/vendors`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email })
+    });
+
+    loadVendors();
+}
+
+async function sendRFP() {
+    const rfp_id = document.getElementById("sendRfpId").value;
+    const checks = document.querySelectorAll(".vendorCheck:checked");
+
+    const vendor_ids = Array.from(checks).map(c => Number(c.value));
+
+    await fetch(`${API}/vendors/send-rfp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ vendor_ids, rfp_id })
+    });
+
+    alert("RFP sent!");
+}
+
+async function compareRFP() {
+    const id = document.getElementById("compareRfpId").value;
+    const res = await fetch(`${API}/compare/${id}`);
+    const data = await res.json();
+    document.getElementById("compareOutput").textContent = JSON.stringify(data, null, 2);
+}
+
+loadVendors();
+</script>
+
+</body>
+</html>
